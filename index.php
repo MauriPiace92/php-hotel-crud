@@ -1,19 +1,8 @@
 <?php 
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "dbhotel";
-    $port = "8889";
-    // Connect
-    $conn = new mysqli($servername, $username, $password, $dbname, $port);
-    // Check connection
-    if ($conn && $conn->connect_error) {
-        echo "Connection failed: " . $conn->connect_error;
-        die();
-    }
+    require_once __DIR__ . '/database_request.php';
 
-    $sql = "SELECT `room_number`, `floor` FROM `stanze`";
+    $sql = "SELECT * FROM `stanze`";
     $result = $conn->query($sql);
 
     $rooms=[];
@@ -41,8 +30,11 @@
 
     <ul>
         <?php foreach($rooms as $room) {?>
-        <li>Stanza numero:<?php echo $room['room_number']?></li>
-        <li>Si trova al piano:<?php echo $room['floor']?> </li>
+            <li>
+                Stanza numero:<?php echo $room['room_number']?> <br>
+                Si trova al piano:<?php echo $room['floor']?> 
+            </li>
+            <a href="room_info.php?id=<?php echo $room['id']; ?>">Vedi Dettaglio Stanza</a>
         <?php } ?>
     </ul>
     
